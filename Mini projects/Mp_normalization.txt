@@ -1,0 +1,89 @@
+NORMALIZATION MINI PROJECT
+
+QUESTION 1: Normalize into 1st Normal Form (1NF)
+
+ORIGINAL TABLE:
+Member_Id | First_Name | Last_Name | Hobbies
+101       | Jayson     | Mark      | Cricket, Swimming, Football
+102       | Ram        | Ganesh    | Swimming, Running, Music
+103       | Raj        | Kishore   | Dancing, Singing, Running
+
+PROBLEM: The "Hobbies" column has multiple values in one cell.
+1NF Rule: Each column must have only ATOMIC (single) values.
+
+SOLUTION - 1NF TABLE:
+Member_Id | First_Name | Last_Name | Hobby
+101       | Jayson     | Mark      | Cricket
+101       | Jayson     | Mark      | Swimming
+101       | Jayson     | Mark      | Football
+102       | Ram        | Ganesh    | Swimming
+102       | Ram        | Ganesh    | Running
+102       | Ram        | Ganesh    | Music
+103       | Raj        | Kishore   | Dancing
+103       | Raj        | Kishore   | Singing
+103       | Raj        | Kishore   | Running
+
+Primary Key: (Member_Id + Hobby) -composite key
+
+-------------------------------------------------------------------------
+
+QUESTION 2: Normalize into 2nd Normal Form (2NF)
+
+ORIGINAL TABLE:
+Empno | Training   | Training_Date | Dept
+101   | Oracle SQL | 12-Aug-2015   | TT
+101   | Java       | 21-Aug-2015   | BU
+102   | Oracle SQL | 18-Sep-2014   | TT
+
+Primary Key: (Empno + Training) - composite key
+
+PROBLEM: "Dept" depends only on Empno, NOT on the full composite key.
+This is a PARTIAL DEPENDENCY -- violates 2NF.
+
+SOLUTION - Split into 2 tables:
+
+TABLE 1: Employee Table
+Empno | Dept
+101   | TT
+102   | TT
+
+TABLE 2: Training Table
+Empno | Training   | Training_Date
+101   | Oracle SQL | 12-Aug-2015
+101   | Java       | 21-Aug-2015
+102   | Oracle SQL | 18-Sep-2014
+
+Now every non-key column depends on the FULL primary key. Table is in 2NF.
+
+--------------------------------------------------------------------------
+
+QUESTION 3: Normalize into 3rd Normal Form (3NF)
+
+ORIGINAL TABLE:
+Member_Id | First_Name | Last_Name | Sports   | Fees
+101       | Rajesh     | Chand     | Cricket  | 100
+102       | Jayesh     | Raj       | Hockey   | 80
+103       | Mark       | Dorson    | Football | 90
+
+Primary Key: Member_Id
+
+PROBLEM: "Fees" depends on "Sports", not directly on Member_Id.
+Member_Id -> Sports -> Fees  (TRANSITIVE DEPENDENCY - violates 3NF)
+
+SOLUTION - Split into 2 tables:
+
+TABLE 1: Member Table
+Member_Id | First_Name | Last_Name | Sports
+101       | Rajesh     | Chand     | Cricket
+102       | Jayesh     | Raj       | Hockey
+103       | Mark       | Dorson    | Football
+
+TABLE 2: Sports Table
+Sports    | Fees
+Cricket   | 100
+Hockey    | 80
+Football  | 90
+
+No transitive dependencies exist. Table is in 3NF.
+
+
