@@ -1,0 +1,113 @@
+HANDS-ON ASSIGNMENT
+Topic: Single Row Functions
+
+1: Display current date, label column Date
+
+SELECT SYSDATE AS "Date"
+FROM DUAL;
+
+
+ 2: Display empno, ename, salary and salary increased by 15.5% expressed as whole number, label column New Salary
+
+SELECT EMPNO, ENAME, SAL, ROUND(SAL * 1.155) AS "New Salary"
+FROM EMP;
+
+
+ 3: Modify previous query to add column that subtracts old salary from new  Label column Increase
+
+SELECT EMPNO, ENAME, SAL,
+       ROUND(SAL * 1.155) AS "New Salary",
+       ROUND(SAL * 1.155) - SAL AS "Increase"
+FROM EMP;
+
+
+ 4: Display ename with first letter uppercase rest lowercase and length of ename for employees whose name starts with J, A, or M Sort by ename
+
+SELECT INITCAP(ENAME) AS "Employee Name", LENGTH(ENAME) AS "Name Length"
+FROM EMP
+WHERE ENAME LIKE 'J%'
+   OR ENAME LIKE 'A%'
+   OR ENAME LIKE 'M%'
+ORDER BY ENAME;
+
+ 5: Prompt user to enter a letter, display employees whose last name starts with that letter
+
+SELECT INITCAP(ENAME) AS "Employee Name", LENGTH(ENAME) AS "Name Length"
+FROM EMP
+WHERE ENAME LIKE UPPER('&start_letter') || '%'
+ORDER BY ENAME;
+
+ 6: Display ename and number of months between today and hire date Label column MONTHS_WORKED, round to closest whole number, order by months worked
+
+SELECT ENAME, ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE)) AS MONTHS_WORKED
+FROM EMP
+ORDER BY MONTHS_WORKED;
+
+
+ 7: Display ename earns monthly but wants 3 times salary Label column Dream Salaries
+
+SELECT ENAME || ' earns ' || SAL ||
+       ' monthly but wants <' ||
+       (SAL*3) || '>'
+       AS "Dream Salaries"
+FROM EMP;
+
+
+ 8: Display ename and salary formatted to 15 characters left-padded with $ symbol, label column SALARY
+
+SELECT ENAME, LPAD(SAL, 15, '$') AS SALARY
+FROM EMP;
+
+
+ 9: Display ename, hiredate and salary review date which is first Monday after 6 months of service Label column REVIEW, format: "Monday, the Thirty-First of July, 2000"
+
+SELECT ENAME,
+       HIREDATE,
+       TO_CHAR(
+          NEXT_DAY(ADD_MONTHS(HIREDATE,6),'MONDAY'),
+          'fmDay, "the" Ddspth "of" Month, YYYY'
+       ) REVIEW
+FROM EMP;
+
+ 10: Display ename, hiredate and day of week employee started
+Label column DAY, order by day of week starting with Monday
+
+SELECT ENAME, HIREDATE,
+       TO_CHAR(HIREDATE, 'fmDay') AS DAY
+FROM EMP
+ORDER BY TO_CHAR(HIREDATE - 1, 'D');
+
+
+11: Display ename and commission If no commission show "No Commission", label column COMM
+
+SELECT ENAME, NVL(TO_CHAR(COMM), 'No Commission') AS COMM
+FROM EMP;
+
+
+12: Display first 8 characters of ename and salary represented by asterisks Each asterisk = 1000 dollars, sort descending by salary Label column EMPLOYEES_AND_THEIR_SALARIES
+
+SELECT SUBSTR(ENAME, 1, 8) || ' ' || RPAD(' ', ROUND(SAL/1000) + 1, '*') AS EMPLOYEES_AND_THEIR_SALARIES
+FROM EMP
+ORDER BY SAL DESC;
+
+
+13: Using DECODE function display grade based on JOB PRESIDENT-A, MANAGER-B, SALESMAN-C, CLERK-D
+
+SELECT ENAME, JOB,
+       DECODE(JOB,
+              'PRESIDENT', 'A',
+              'MANAGER',   'B',
+              'SALESMAN',  'C',
+              'CLERK',     'D') AS GRADE
+FROM EMP;
+
+ 14: Rewrite Assignment 13 using CASE syntax
+
+SELECT ENAME, JOB,
+       CASE JOB
+           WHEN 'PRESIDENT' THEN 'A'
+           WHEN 'MANAGER'   THEN 'B'
+           WHEN 'SALESMAN'  THEN 'C'
+           WHEN 'CLERK'     THEN 'D'
+       END AS GRADE
+FROM EMP;
