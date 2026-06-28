@@ -1,0 +1,49 @@
+HANDS-ON ASSIGNMENT
+Topic: Using the Set Operators
+
+
+ 1: Matrix query to display job, salary for each department (10, 20, 30)  and total salary for that job
+
+SELECT JOB,
+       SUM(CASE WHEN DEPTNO = 10 THEN SAL ELSE 0 END) AS "Dept 10",
+       SUM(CASE WHEN DEPTNO = 20 THEN SAL ELSE 0 END) AS "Dept 20",
+       SUM(CASE WHEN DEPTNO = 30 THEN SAL ELSE 0 END) AS "Dept 30",
+       SUM(SAL) AS "Total Salary"
+FROM EMP
+GROUP BY JOB;
+
+ 2: Using SET operator display DEPTNO, SUM(SAL) for each dept JOB, SUM(SAL) for each job and Total Salary
+
+SELECT TO_CHAR(DEPTNO) AS "Dept/Job", SUM(SAL) AS "Sum of Salary"
+FROM EMP
+GROUP BY DEPTNO
+
+UNION ALL
+
+SELECT JOB, SUM(SAL)
+FROM EMP
+GROUP BY JOB
+
+UNION ALL
+
+SELECT 'Total', SUM(SAL)
+FROM EMP;
+
+
+3: Using SET operator display JOB and DEPTNO for employees working in dept 20, 10, 30 in that order
+
+SELECT JOB, DEPTNO
+FROM EMP
+WHERE DEPTNO = 20
+
+UNION ALL
+
+SELECT JOB, DEPTNO
+FROM EMP
+WHERE DEPTNO = 10
+
+UNION ALL
+
+SELECT JOB, DEPTNO
+FROM EMP
+WHERE DEPTNO = 30;
