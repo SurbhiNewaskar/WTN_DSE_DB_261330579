@@ -1,0 +1,116 @@
+ HANDS-ON ASSIGNMENT
+ Topic: Restricting and Sorting Data
+ 
+ 1: Display Ename, Sal, Comm from EMP who earn commission and Sort in descending order of Salary and Comm using numeric position
+
+SELECT ENAME, SAL, COMM
+FROM EMP
+WHERE COMM IS NOT NULL AND COMM > 0
+ORDER BY 2 DESC, 3 DESC;
+
+
+ 2: Display all unique job codes from EMP table
+
+SELECT DISTINCT JOB
+FROM EMP;
+
+ 3: Display with column aliases - Emp#, Employee, Job, Hire Date
+
+SELECT EMPNO AS "Emp #", ENAME AS "Employee", JOB AS "Job", HIREDATE AS "Hire Date"
+FROM EMP;
+
+
+ 4: Display last name concatenated with job ID separated by comma and space and Name the column as "Employee and Title"
+
+SELECT ENAME || ', ' || JOB AS "Employee and Title"
+FROM EMP;
+
+
+ 5: Display all data from EMP table - ENAME, JOB, HIREDATE, MGR and Separate each column output by a comma, name column title THE_OUTPUT
+
+SELECT ENAME || ',' || JOB || ',' || HIREDATE || ',' || MGR AS THE_OUTPUT
+FROM EMP;
+
+ 6: Display ename, job, hiredate for employees named SCOTT or TURNER .Order by hiredate ascending
+
+SELECT ENAME, JOB, HIREDATE
+FROM EMP
+WHERE ENAME IN ('SCOTT', 'TURNER')
+ORDER BY HIREDATE ASC;
+
+
+ 7: Display ename and department number for employees in dept 20 or 30 Order alphabetically by ename ascending
+
+SELECT ENAME, DEPTNO
+FROM EMP
+WHERE DEPTNO IN (20, 30)
+ORDER BY ENAME ASC;
+
+
+ 8: Modify previous query - display last name and salary for employees earning between 2000 and 3000 in dept 20 or 30 Label columns Employee and Monthly Salary
+
+SELECT ENAME AS "Employee", SAL AS "Monthly Salary"
+FROM EMP
+WHERE DEPTNO IN (20, 30)
+AND SAL BETWEEN 2000 AND 3000
+ORDER BY ENAME ASC;
+
+
+ 9: Display last name and hire date for all employees hired in 1981
+
+SELECT ENAME, HIREDATE
+FROM EMP
+WHERE HIREDATE LIKE '%81%';
+
+
+ 10: Display Ename and Sal of employees who earn more than user specified amount Using prompt
+
+SELECT ENAME, SAL
+FROM EMP
+WHERE SAL > &salary;
+
+
+ 11: Display last name and job title of employees who do not have a manager
+
+SELECT ENAME, JOB
+FROM EMP
+WHERE MGR IS NULL;
+
+
+ 12: Query that prompts user for Manager ID Displays EMPNO, ENAME, SAL, DEPTNO with ability to sort on selected column
+
+SELECT EMPNO, ENAME, SAL, DEPTNO
+FROM EMP
+WHERE MGR = &manager_id
+ORDER BY &column_name;
+
+
+ 13: Prompt user for MGR and generate empno, ename, salary, department With ability to sort on selected column
+
+SELECT EMPNO, ENAME, SAL, DEPTNO
+FROM EMP
+WHERE MGR = &mgr_id
+ORDER BY &sort_column;
+
+
+ 14: Display all employee last names where third letter of name is A
+
+SELECT ENAME
+FROM EMP
+WHERE ENAME LIKE '__A%';
+
+
+ 15: Display last name of all employees who have both A and S in their ename
+
+SELECT ENAME
+FROM EMP
+WHERE ENAME LIKE '%A%'
+AND ENAME LIKE '%S%';
+
+
+ 16: Display Ename, Job, Sal for employees whose job is CLERK and salary is 800 or 950 or 1300
+
+SELECT ENAME, JOB, SAL
+FROM EMP
+WHERE JOB = 'CLERK'
+AND SAL IN (800, 950, 1300);
