@@ -1,0 +1,30 @@
+HANDS-ON ASSIGNMENT
+Topic: Retrieving Data Using SQL SELECT Statement
+
+Assignment 1 (M): Determine the Structure of DEPT Table and its Contents
+
+- To see the structure of DEPT table:
+
+DESC DEPT;
+
+- To see all contents of DEPT table:
+
+SELECT * FROM DEPT;
+
+----------------------------------------------------------------------------------------
+
+Assignment 2 (M): Determine the Structure of EMP Table and its Contents
+
+- To see the structure of EMP table:
+
+DESC EMP;
+
+- To see all contents of EMP table:
+
+SELECT * FROM EMP;
+
+-----------------------------------------------------------------------------------------
+
+Assignment 3 (M): Display Ename and Deptno from EMP table where Empno is 7788
+
+SELECT ENAME, DEPTNO FROM EMP WHERE EMPNO = 7788;
