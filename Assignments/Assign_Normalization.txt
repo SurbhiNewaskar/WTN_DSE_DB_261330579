@@ -1,0 +1,77 @@
+NORMALIZATION HANDS-ON ASSIGNMENTS
+
+Assignment 1 (M): EMPLOYEE Table - Normalization Analysis
+
+Table: EMPNO, ENAME, SAL, DEPTNO, DNAME, LOC
+
+CURRENT NORMAL FORM: 2NF
+- Primary Key: EMPNO
+- ENAME and SAL depend directly on EMPNO 
+- But DNAME and LOC depend on DEPTNO, not on EMPNO
+- This is a TRANSITIVE DEPENDENCY: EMPNO -> DEPTNO -> DNAME, LOC
+
+PROBLEM: Violates 3NF due to transitive dependency.
+
+SOLUTION - Convert to 3NF, split into 2 tables:
+
+TABLE 1: EMPLOYEE
+EMPNO | ENAME | SAL | DEPTNO
+
+TABLE 2: DEPARTMENT
+DEPTNO | DNAME | LOC
+
+Foreign Key: DEPTNO in EMPLOYEE references DEPTNO in DEPARTMENT.
+Now the table is in 3NF.
+
+------------------------------------------------------------------------------
+
+Assignment 2 (S): STUDENT Table - Normalization Analysis
+
+Table: ROLLNO, NAME, AGE, EXAM, MARKS, GRADE
+
+CURRENT NORMAL FORM: 1NF
+- Primary Key: (ROLLNO + EXAM) - composite key
+- NAME and AGE depend only on ROLLNO -PARTIAL DEPENDENCY
+- GRADE depends on MARKS, not on the primary key - TRANSITIVE DEPENDENCY
+
+PROBLEM: Violates 2NF due to partial dependency.
+
+SOLUTION - Convert to 2NF first, split into 2 tables:
+
+TABLE 1: STUDENT
+ROLLNO | NAME | AGE
+
+TABLE 2: EXAM_RESULT
+ROLLNO | EXAM | MARKS | GRADE
+
+Then convert to 3NF - GRADE depends on MARKS (transitive dependency):
+
+TABLE 2a: EXAM_RESULT
+ROLLNO | EXAM | MARKS
+
+TABLE 2b: GRADE_SCALE
+MARKS | GRADE
+
+Now fully in 3NF.
+
+------------------------------------------------------------------------------
+
+Assignment 3 (S): EMPLOYEE Project Table - Problem & Solution
+
+Table: EMPNO, PROJECT_NO, NO_OF_DAYS, CUSTOMERNAME
+Composite Primary Key: (EMPNO + PROJECT_NO)
+
+PROBLEM: PARTIAL DEPENDENCY
+- CUSTOMERNAME depends only on PROJECT_NO, not on the full composite key
+- This violates 2NF
+
+SOLUTION - Convert to 2NF, split into 2 tables:
+
+TABLE 1: EMP_PROJECT
+EMPNO | PROJECT_NO | NO_OF_DAYS
+
+TABLE 2: PROJECT
+PROJECT_NO | CUSTOMERNAME
+
+Foreign Key: PROJECT_NO in EMP_PROJECT references PROJECT_NO in PROJECT.
+Now the table is in 2NF with no partial dependencies.
