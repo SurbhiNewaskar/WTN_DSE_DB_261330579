@@ -1,0 +1,107 @@
+HANDS-ON ASSIGNMENT
+Topic: Joins
+
+
+ 1: Display EMPNO, ENAME, SAL, DNAME, LOC using NATURAL JOIN
+
+SELECT EMPNO, ENAME, SAL, DNAME, LOC
+FROM EMP
+NATURAL JOIN DEPT;
+
+
+ 2: Display JOB, MGR, SAL, COMM, DNAME for employees whose JOB is SALESMAN Using Equi Join
+
+SELECT E.JOB, E.MGR, E.SAL, E.COMM, D.DNAME
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND E.JOB = 'SALESMAN';
+
+
+ 3: Display ENAME, JOB, DEPTNO, DNAME for employees working in DALLAS Using Equi Join
+
+SELECT E.ENAME, E.JOB, E.DEPTNO, D.DNAME
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+AND D.LOC = 'DALLAS';
+
+
+ 4: Display employee name, employee number, manager name and manager number Label columns Employee, Emp#, Manager, Mgr#  Using Self Join
+
+SELECT E.ENAME AS "Employee", E.EMPNO AS "Emp#",
+       M.ENAME AS "Manager", M.EMPNO AS "Mgr#"
+FROM EMP E, EMP M
+WHERE E.MGR = M.EMPNO;
+
+
+ 5: Modify previous query to include all employees including KING who has no manager, order by employee number Using Outer Join
+
+SELECT E.ENAME AS "Employee", E.EMPNO AS "Emp#",
+       M.ENAME AS "Manager", M.EMPNO AS "Mgr#"
+FROM EMP E
+LEFT OUTER JOIN EMP M ON E.MGR = M.EMPNO
+ORDER BY E.EMPNO;
+
+
+ 6: Show structure of SALGRADE table Then display name, job, department name, salary and grade for all employees Using Non-Equi Join
+
+DESC SALGRADE;
+
+SELECT E.ENAME, E.JOB, D.DNAME, E.SAL, S.GRADE
+FROM EMP E, DEPT D, SALGRADE S
+WHERE E.DEPTNO = D.DEPTNO
+AND E.SAL BETWEEN S.LOSAL AND S.HISAL;
+
+
+ 7: Display ENAME, DNAME of all employees Also display departments that have no employees Using Outer Join
+
+SELECT E.ENAME, D.DNAME
+FROM EMP E
+RIGHT OUTER JOIN DEPT D ON E.DEPTNO = D.DEPTNO;
+
+
+ 8: Display names and hire dates for employees hired before their managers Along with manager name and hire date Using Self Join with Outer Join
+
+SELECT E.ENAME,
+       E.HIREDATE,
+       M.ENAME,
+       M.HIREDATE
+FROM EMP E
+LEFT OUTER JOIN EMP M
+ON E.MGR=M.EMPNO
+AND E.HIREDATE<M.HIREDATE;
+
+ 9: Display EMPNO, ENAME, DNAME, LOC for employees working as CLERK Using USING clause
+
+SELECT E.EMPNO, E.ENAME, D.DNAME, D.LOC
+FROM EMP E
+JOIN DEPT D USING (DEPTNO)
+WHERE E.JOB = 'CLERK';
+
+
+ 10: Display ENAME, SAL, MGR, DNAME for employees with salary more than 2000 Using ON clause
+
+SELECT E.ENAME, E.SAL, E.MGR, D.DNAME
+FROM EMP E
+JOIN DEPT D ON E.DEPTNO = D.DEPTNO
+WHERE E.SAL > 2000;
+
+
+ 11: Display EMPNO, ENAME, JOB, DEPTNO, DNAME, LOC Using LEFT OUTER JOIN
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.DEPTNO, D.DNAME, D.LOC
+FROM EMP E
+LEFT OUTER JOIN DEPT D ON E.DEPTNO = D.DEPTNO;
+
+
+12: Display ENAME, DNAME Using RIGHT OUTER JOIN
+
+SELECT E.ENAME, D.DNAME
+FROM EMP E
+RIGHT OUTER JOIN DEPT D ON E.DEPTNO = D.DEPTNO;
+
+
+13: Display EMPNO, DNAME, LOC Using FULL OUTER JOIN
+
+SELECT E.EMPNO, D.DNAME, D.LOC
+FROM EMP E
+FULL OUTER JOIN DEPT D ON E.DEPTNO = D.DEPTNO;
